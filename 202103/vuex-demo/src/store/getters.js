@@ -14,6 +14,8 @@ export default {
     // 
     test(state, getters) {
         debugger
-        return getters.memberInfo
-    }
+        return state.testD
+        // return getters.memberInfo
+    },
+
 }

@@ -15,14 +15,22 @@ function pro () {
         }, 2000);
     })
 }
+function haha() {
+    let t = Promise.resolve(2+1).then(res => {
+        return Promise.resolve(res+2)
+    })
+    return t
+}
 
 export default {
     async buyVip (store, e) {
-        debugger
         // store是个对象，里面包含state和commit
         store.commit('setMemberInfo', await pro())
-        
+        let t = await haha()
+        debugger
+        return Promise.resolve(2+1);
     },
+    
     getFreeVip(store) {
         return new Promise((resolve, reject) => {
 

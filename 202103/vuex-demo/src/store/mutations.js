@@ -6,5 +6,9 @@ export default {
         debugger
         state.userStatus = v.userStatus;
         state.vipLevel = v.vipLevel;
+    },
+    changeTestD (state) {
+        debugger
+        state.testD++;
     }
 }

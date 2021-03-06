@@ -16,6 +16,7 @@
             ></card>
         </div>
         <button class="footer-opt btn" @click="recharge">充值</button>
+        <button class="footer-opt btn" @click="listenT">listen</button>
     </div>
 </template>
 
@@ -74,12 +75,20 @@ export default {
         ...mapGetters(['memberInfo','test']),
         ...mapState(['userStatus', 'vipLevel', 'userInfo'])
     },
+    watch:{
+        test(val, oldval){
+            debugger
+        }
+    },
     mounted() {
         debugger
         console.log('mapstate', this.userStatus, this.vipLevel, this.userInfo)
         console.log('test', store.getters.test)
     },
     methods: {
+        listenT() {
+            store.commit('changeTestD')
+        },
         recharge() {
             this.$router.push("./userCenter");
         },
