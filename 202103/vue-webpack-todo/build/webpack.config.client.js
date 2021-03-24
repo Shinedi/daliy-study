@@ -13,6 +13,9 @@ const devServer = {                                //这个devServer的配置是
     overlay: {
         errors: true,                               //编译中遇到的错误都会显示到网页中去
     },
+    historyApiFallback: {
+      index: '/public/index.html'
+    },
     // open: true ,                                 //项目启动时,会默认帮你打开浏览器
     hot: true                                       //在单页面应用开发中,我们修改了代码后是整个页面都刷新,开启hot后,将只刷新对应的组件
 }
@@ -22,7 +25,9 @@ const defaultPlugins = [  // 为什么不在base.config中写呢？因为后面�
             NODE_ENV: isDev ? '"development"' : '"production"'
         }
     }),
-    new HTMLPlugin()
+    new HTMLPlugin({
+      template: path.join(__dirname, 'template.html')
+    })
 ]
 
 let config
@@ -46,7 +51,7 @@ if(isDev){
                         'stylus-loader'                     //处理stylus的css预处理器的问题件,转换成css后,抛给上一层的css-loader
                     ]
                 }
-            ]   
+            ]
         },
         devServer,
         plugins: defaultPlugins.concat([ //添加两个插件用于hot:true的配置
@@ -58,7 +63,7 @@ if(isDev){
     config = webpackMerge.merge(baseConfig, {
         entry: {
             app: path.join(__dirname,'../client/index.js'),
-            vendor: ['vue']   
+            vendor: ['vue']
         },
         output: {
             filename: '[name].[chunkhash:8].js'  //此处一定是chunkhash,因为用hash时app和vendor的hash码是一样的了,这样每次业务代码更新,vendor也会更新,也就没有了意义.
@@ -88,11 +93,11 @@ if(isDev){
             new webpack.optimize.CommonsChunkPlugin({          //定义静态文件打包
                 name: 'vendor'
             }),
-            new webpack.optimize.CommonsChunkPlugin({         //将app.js文件中一些关于webpack文件的配置单独打包出为一个文件,用于解决部分浏览器长缓存问题   
+            new webpack.optimize.CommonsChunkPlugin({         //将app.js文件中一些关于webpack文件的配置单独打包出为一个文件,用于解决部分浏览器长缓存问题
                 name: 'runtime'
             })
         ])
     })
-} 
+}
 
 module.exports = config                                 //声明一个config的配置,用于对外暴露
