@@ -6,7 +6,7 @@ export default [
     redirect: '/app'
   },
   {
-    path: '/app/:id',  // 匹配的是/app/xxx
+    path: '/app',  // 匹配的是/app/xxx
     props: true,   // 会把id传到todo组件里面来
     // props: {
     //   id: 456

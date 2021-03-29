@@ -29,6 +29,9 @@ import Tabs from './tabs.vue'
 let id = 0
 
 export default {
+    metaInfo: {
+      title: 'the todo app'
+    },
     beforeRouteEnter (to, from, next) {
       // 这里没有this,因为这时候this还没有创建
       console.log('to', to)

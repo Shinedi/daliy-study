@@ -2,6 +2,7 @@
     <div class="helper">
         <span class="left">{{unFinishedTodoLength}} items left</span>
         <span class="tabs">
+          <!-- class="tabs" -->
             <span
                 v-for="state in states"
                 :key="state"

@@ -4,6 +4,7 @@ const webpack = require("webpack")                      //引入webpack
 const webpackMerge = require("webpack-merge")
 const ExtractPlugin = require("extract-text-webpack-plugin")
 const baseConfig = require("./webpack.config.base")
+const VueClientPlugin = require("vue-server-renderer/client-plugin")
 
 const isDev = process.env.NODE_ENV === "development"    //判断是否为测试环境,在启动脚本时设置的环境变量都是存在于process.env这个对象里面的
 
@@ -27,7 +28,8 @@ const defaultPlugins = [  // 为什么不在base.config中写呢？因为后面�
     }),
     new HTMLPlugin({
       template: path.join(__dirname, 'template.html')
-    })
+    }),
+    new VueClientPlugin()
 ]
 
 let config
@@ -62,11 +64,12 @@ if(isDev){
 } else{
     config = webpackMerge.merge(baseConfig, {
         entry: {
-            app: path.join(__dirname,'../client/index.js'),
+            app: path.join(__dirname,'../client/client-entry.js'),
             vendor: ['vue']
         },
         output: {
-            filename: '[name].[chunkhash:8].js'  //此处一定是chunkhash,因为用hash时app和vendor的hash码是一样的了,这样每次业务代码更新,vendor也会更新,也就没有了意义.
+            filename: '[name].[chunkhash:8].js',  //此处一定是chunkhash,因为用hash时app和vendor的hash码是一样的了,这样每次业务代码更新,vendor也会更新,也就没有了意义.
+            publicPath: '/public/'
         },
         module: {
             rules: [

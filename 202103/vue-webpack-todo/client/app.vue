@@ -28,10 +28,18 @@ import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
 console.log(Header.__docs)
 export default {
+  metaInfo: {
+    title: "Shinedi's TODO"
+  },
   components: {
       Header,
       Footer,
       // Todo
+  },
+  data(){
+    return {
+      arr: []
+    }
   },
   methods: {
     //, 'a/add', 'b/textAction'
