@@ -16,6 +16,7 @@ serverCompiler.outputFileSystem = mfs // 指定输出路径在mfs
 
 let bundle // 记录webpack打包生成的新的文件
 serverCompiler.watch({}, (err, stats) => { // 在文件有变化的时候，在服务端重新打包
+  console.log('serverCompiler.watch')
   if (err) throw err
   stats = stats.toJson()
   stats.errors.forEach(err => console.log(err))
@@ -29,7 +30,7 @@ serverCompiler.watch({}, (err, stats) => { // 在文件有变化的时候，在�
   console.log('new bundle generated')
 })
 const handleSSR = async ctx => {
-  console.log("bundle", bundle)
+  console.log('handleSSR')
   if (!bundle) {
     ctx.body = `你等一会 `
     return
@@ -38,7 +39,6 @@ const handleSSR = async ctx => {
   const clientManifestResp = await axios.get( // 获取浏览器端webpack中打包好的json
     'http://127.0.0.1:8000/public/vue-ssr-client-manifest.json' // vue-ssr-client-manifest.json是这个插件VueClientPlugin生成的文件名
   )
-  console.log('_____',clientManifestResp.data)
   const clientManifest = clientManifestResp.data
 
   const template = fs.readFileSync( // 读取模板

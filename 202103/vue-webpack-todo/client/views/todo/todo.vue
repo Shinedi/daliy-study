@@ -1,10 +1,26 @@
 <template>
     <section class="real-app">
         <!-- <router-view></router-view> -->
+        <div class="tab-container">
+           <tabs :value="tabValue" @change="handleChangeTab">
+            <tab label="tab1" index="1">
+              <span>tab1 content {{inputContent}}</span>
+            </tab>
+            <tab index="2">
+              <span slot="label" style="color: red">tab2</span>
+              <span>tab2 content</span>
+            </tab>
+            <tab label="tab3" index="3">
+              <span>tab3 content</span>
+            </tab>
+          </tabs>
+        </div>
+
         <input
             type="text"
             class="add-input"
             autofocus="autofocus"
+            v-model="inputContent"
             placeholder="接下去要做什么?"
             @keyup.enter="addTodo"
         >
@@ -14,18 +30,19 @@
             :key="todo.id"
             @del="deleteTodo"
         />
-        <Tabs
+        <!-- <Helper
             :filter="filter"
             :todos="todos"
             @togole="togoleFilter"
             @clearAllCompleted="clearAllCompleted"
-        ></Tabs>
+        ></Helper> -->
     </section>
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex'
 import Item from './item.vue'
-import Tabs from './tabs.vue'
+import Helper from './tabs.vue'
 let id = 0
 
 export default {
@@ -60,30 +77,34 @@ export default {
     },
     data() {
         return {
-            todos: [],
-            filter: 'all'
+            filter: 'all',
+            tabValue: 1,
+            inputContent: ''
         }
     },
     props: ['id'],
     components:{
         Item,
-        Tabs
+        Helper
     },
     computed: {
-        filteredTodos(){
-            if(this.filter === 'all'){
-                return this.todos
-            }
-            debugger
-            const completed = this.filter === 'completed'
-            return this.todos.filter(todo => completed === todo.completed)
+      ...mapState(['todos']),
+      filteredTodos(){
+        if(this.filter === 'all'){
+          return this.todos
         }
+        debugger
+        const completed = this.filter === 'completed'
+        return this.todos.filter(todo => completed === todo.completed)
+      }
     },
     mounted() {
       // console.log('id', this.id)
       console.log(this.$route)
+      this.fetchTodos()
     },
     methods: {
+        ...mapActions(['fetchTodos']),
         addTodo(e){
             this.todos.unshift({
                 id: id++,
@@ -101,6 +122,9 @@ export default {
         },
         clearAllCompleted(){
             this.todos = this.todos.filter(todo => !todo.completed)
+        },
+        handleChangeTab (value) {
+          this.tabValue = value
         }
     }
 }
@@ -128,6 +152,9 @@ export default {
     padding 16px 16px 16px 36px
     border none
     box-shadow inset 0 -2px 1px rgba(0, 0, 0, 0.03)
+.tab-container
+  background #ffffff
+  padding 0 15px
 
 
 </style>

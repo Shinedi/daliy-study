@@ -43,7 +43,7 @@ export default {
     },
     computed:{
         unFinishedTodoLength(){
-            return this.todos.filter(todo => !todo.completed).length;
+            return Array.isArray(this.todos) ? this.todos.filter(todo => !todo.completed).length : 0;
         }
     }
 }

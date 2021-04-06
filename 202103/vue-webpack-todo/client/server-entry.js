@@ -3,6 +3,7 @@ import createApp from './create-app'
 
 export default context => {
   return new Promise((resolve, reject) => {
+    console.log('server-entry')
     const {app, router} = createApp()
 
     router.push(context.url) // server渲染执行完成会调用这里，这时候访问的js路径还是webpack-dev-server生成的，服务端渲染找不到，就会报错或者图片不显示，

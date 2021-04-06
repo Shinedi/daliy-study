@@ -4,5 +4,8 @@ export default {
   },
   updateName(state, {name}) {
     state.name.firstName = name
+  },
+  fillTodos(state, todos) {
+    state.todos = todos
   }
 }

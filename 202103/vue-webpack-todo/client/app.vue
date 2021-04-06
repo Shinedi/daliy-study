@@ -15,6 +15,8 @@
         <transition name="fade">
           <router-view></router-view>
         </transition>
+        <!-- <Notification content="test notify" /> -->
+        <button @click="notify">click me1</button>
         <Footer></Footer>
         <!-- <router-view name="a"></router-view> -->
     </div>
@@ -45,16 +47,23 @@ export default {
     //, 'a/add', 'b/textAction'
     ...mapActions(['updateCountAsync']),
     //, 'a/updateText'
-    ...mapMutations(['updateCount'])
+    ...mapMutations(['updateCount']),
+    notify() {
+       this.$notify({
+        content: 'test notify',
+        btn: 'close'
+      })
+    }
   },
   mounted() {
-    console.log('store', this.$store)
+
+    /* console.log('store', this.$store)
 
     let i = 1
     this.updateCountAsync({
       num: 5,
       time: 2000
-    })
+    }) */
     // this['a/add']()
     // this.updateText(123)
     // this['a/updateText'](456)

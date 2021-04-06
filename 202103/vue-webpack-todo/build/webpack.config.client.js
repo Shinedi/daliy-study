@@ -14,8 +14,13 @@ const devServer = {                                //这个devServer的配置是
     overlay: {
         errors: true,                               //编译中遇到的错误都会显示到网页中去
     },
+    headers: {'Access-Control-Allow-Origin': '*'},
     historyApiFallback: {
       index: '/public/index.html'
+    },
+    proxy: {
+      '/api': 'http://127.0.0.1:3333',
+      '/user': 'http://127.0.0.1:3333',
     },
     // open: true ,                                 //项目启动时,会默认帮你打开浏览器
     hot: true                                       //在单页面应用开发中,我们修改了代码后是整个页面都刷新,开启hot后,将只刷新对应的组件
