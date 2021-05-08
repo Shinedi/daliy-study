@@ -1,6 +1,9 @@
 <template>
     <div id="app">
         <div id="cover"></div>
+        <div id="loading" v-show="loading">
+          <loading />
+        </div>
         <Header></Header>
         {{count}}
         <p>{{fullName}}</p>
@@ -12,7 +15,7 @@
         <router-link to="/app/456">app456</router-link>
         <router-link to="/login">login</router-link>
         <!-- <router-link to="/login/exact">login exact</router-link> -->
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
         <!-- <Notification content="test notify" /> -->
@@ -25,6 +28,7 @@
 <script>
 import Header from './layout/header.vue'
 import Footer from './layout/footer.jsx'
+import loading from './components/loading/loading.vue'
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 // import Todo from './views/todo/todo.vue'
 
@@ -36,6 +40,7 @@ export default {
   components: {
       Header,
       Footer,
+      loading
       // Todo
   },
   data(){
@@ -92,6 +97,7 @@ export default {
   computed: {
     // ...mapState(['count']), // 需要安装babel-preset-stage-1来支持这种语法
     ...mapState({
+     loading: state => state.loading,
       // counter: 'count'
       count: state => state.count,
       // textA: state => state.a.text,
@@ -120,13 +126,25 @@ export default {
     top 0
     bottom 0
     #cover
-        position absolute
-        left 0
-        right 0
-        top 0
-        bottom 0
-        background-color #999
-        opacity 0.2
-        z-index -1
+      position absolute
+      left 0
+      right 0
+      top 0
+      bottom 0
+      background-color #999
+      opacity 0.2
+      z-index -1
+    #loading{
+      position fixed
+      top 0
+      right 0
+      bottom 0
+      left 0
+      background-color rgba(255,255,255,.3)
+      z-index 99
+      display flex
+      align-items center
+      justify-content center
+}
 
 </style>

@@ -22,20 +22,21 @@
             autofocus="autofocus"
             v-model="inputContent"
             placeholder="接下去要做什么?"
-            @keyup.enter="addTodo"
+            @keyup.enter="handleAdd"
         >
         <Item
             :todo="todo"
             v-for="todo in filteredTodos"
             :key="todo.id"
             @del="deleteTodo"
+            @toggle="toggleTodoState"
         />
-        <!-- <Helper
+        <Helper
             :filter="filter"
             :todos="todos"
             @togole="togoleFilter"
             @clearAllCompleted="clearAllCompleted"
-        ></Helper> -->
+        ></Helper>
     </section>
 </template>
 
@@ -93,10 +94,12 @@ export default {
         if(this.filter === 'all'){
           return this.todos
         }
-        debugger
         const completed = this.filter === 'completed'
         return this.todos.filter(todo => completed === todo.completed)
       }
+    },
+    asyncData({store}) {
+      return store.dispatch('fetchTodos')
     },
     mounted() {
       // console.log('id', this.id)
@@ -104,27 +107,48 @@ export default {
       this.fetchTodos()
     },
     methods: {
-        ...mapActions(['fetchTodos']),
-        addTodo(e){
-            this.todos.unshift({
-                id: id++,
-                content: e.target.value.trim(),
-                completed: false
+        ...mapActions([
+          'fetchTodos',
+          'addTodo',
+          'deleteTodo',
+          'updateTodo',
+          'deleteAllCompleted'
+          ]),
+        handleAdd(e){
+          const content = e.target.value.trim()
+          if (!content) {
+            this.$notify({
+              content: '必须输入要做的内容'
             })
-            e.target.value = ''
-
+            return
+          }
+          const todo = {
+            content,
+            completed: false
+          }
+          this.addTodo(todo)
+          e.target.value = ''
         },
-        deleteTodo(id){
-            this.todos.splice(this.todos.findIndex(todo => todo.id == id),1)
-        },
+        // deleteTodo(id){
+        //     this.todos.splice(this.todos.findIndex(todo => todo.id == id),1)
+        // },
         togoleFilter(state){
-            this.filter = state
+          this.filter = state
         },
         clearAllCompleted(){
-            this.todos = this.todos.filter(todo => !todo.completed)
+          this.deleteAllCompleted()
+          // this.todos = this.todos.filter(todo => !todo.completed)
         },
         handleChangeTab (value) {
           this.tabValue = value
+        },
+        toggleTodoState (todo) {
+          this.updateTodo({
+            id: todo.id,
+            todo: Object.assign({}, todo, {
+              completed: !todo.completed
+            })
+          })
         }
     }
 }

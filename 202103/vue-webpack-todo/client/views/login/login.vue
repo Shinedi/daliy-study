@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
   metaInfo: {
     title: 'login Page'
@@ -28,10 +29,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     doSubmit (e) {
       e.preventDefault(); // 默认表单会自动提交跳转页面
       if (this.validate()) {
-
+        this.login({username: this.username, password: this.password}).then(()=> {
+          this.$router.replace('/app') // 不会返回这一级页面
+        })
       }
     },
     validate() {

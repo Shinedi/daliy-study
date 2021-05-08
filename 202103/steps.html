@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            width: 360px;
+            margin: 0 auto;
+        }
+        
+        li {
+            position: relative;
+            padding: 0 30px;
+            list-style: none;
+            border-left: 2px solid #ccc;
+        }
+        
+        li:before {
+            content: "√";
+            display: block;
+            position: absolute;
+            margin-left: -6px;
+            top: 0;
+            left: -5px;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            background: red;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="contract-operate_recodeMain">
+        <ul class="contract-operate_recode_date">
+          <li>
+            <span class="operate-date">2019-01-04 11:14:21</span>
+            <i></i>
+            <span class="operate-des">标准单次合同生成，待我方签章</span>
+          </li>
+          <li>
+            <span>2019-01-05 13:22:32</span>
+            <i></i>
+            <span>文件1我方签章 操作人：李莲</span>
+          </li>
+          <li>
+            <span>2019-01-08 16:02:02</span>
+            <i></i>
+            <span>文件1对方签章 操作人：王二</span>
+          </li>
+          <li>
+            <span>2019-01-10 10:11:21</span>
+            <i></i>
+            <span>文件1合同签署完成</span>
+          </li>
+        </ul>
+    </div>
+</body>
+</html>

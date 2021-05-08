@@ -8,7 +8,7 @@ const baseConfig = require("./webpack.config.base")
 const isDev = process.env.NODE_ENV === "development"    //判断是否为测试环境,在启动脚本时设置的环境变量都是存在于process.env这个对象里面的
 
 const devServer = {                                //这个devServer的配置是在webpack2.x以后引入的,1.x是没有的
-    port: 8000,                                     //访问的端口号
+    port: 8080,                                     //访问的端口号
     host: '127.0.0.1',                              //可以设置0.0.0.0 ,这样设置你可以通过127.0.0.1或则localhost去访问
     overlay: {
         errors: true,                               //编译中遇到的错误都会显示到网页中去
