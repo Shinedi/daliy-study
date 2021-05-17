@@ -1,15 +1,22 @@
-'use strict'
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+
+'use strict';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+// import logo from './images/logo.png';
+// import './search.less';
 
 class Search extends React.Component {
+
     render() {
-        return <div>Search Text</div>
+        return <div>
+            搜索文字的内容
+        </div>;
     }
 }
 
 ReactDOM.render(
-    <Search/>,
+    <Search />,
     document.getElementById('root')
-)
+);
