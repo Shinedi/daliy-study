@@ -4,14 +4,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import logo from './images/logo.png';
-// import './search.less';
+import './search.less'
+import logo from './images/go1.png';
 
 class Search extends React.Component {
 
     render() {
-        return <div>
-            搜索文字的内容
+        return <div className="search-text">
+            <img src={logo} />
+            搜索文字内
         </div>;
     }
 }
